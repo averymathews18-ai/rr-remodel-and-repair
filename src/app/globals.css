@@ -1,26 +1,158 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   BRAND DESIGN SYSTEM
+   Everything is driven by CSS variables so the whole site can
+   be recolored to match the real logo by editing ONLY the
+   values in @theme below. Placeholder palette = premium
+   "warm brass on ink" remodeling aesthetic.
+   ============================================================ */
+@theme {
+  /* Core brand palette — sampled from the R&R bronze logo ------ */
+  --color-ink: #17140f;        /* warm near-black (bronze base)   */
+  --color-ink-soft: #211b14;   /* raised dark surfaces            */
+  --color-ink-mute: #37291c;   /* dark hairlines                  */
+  --color-brass: #c0905a;      /* signature bronze accent (logo)  */
+  --color-brass-deep: #8c5e33; /* deep bronze — hover / gradient  */
+  --color-brass-glow: #e7cca0; /* metallic highlight sheen        */
+  --color-cream: #f7f2ea;      /* primary light background        */
+  --color-bone: #ece2d2;       /* alt light surface               */
+  --color-stone: #6f6559;      /* warm muted body text            */
+  --color-slate: #40372c;      /* warm strong body text on light  */
+  --color-line: #e7ddca;       /* light hairlines                 */
+  --color-white: #ffffff;
+
+  /* Typography ----------------------------------------------- */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+
+  /* Elevation ------------------------------------------------ */
+  --shadow-soft: 0 14px 40px -18px rgba(18, 21, 27, 0.35);
+  --shadow-lift: 0 34px 70px -26px rgba(18, 21, 27, 0.5);
+  --shadow-brass: 0 18px 50px -16px rgba(140, 94, 51, 0.55);
+
+  /* Motion --------------------------------------------------- */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout --------------------------------------------------- */
+  --header-h: 76px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* ---------- Base ------------------------------------------- */
+/* These live in @layer base so Tailwind utility classes (e.g.
+   text-cream on a dark section) always win over the defaults. */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-slate);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Headings default to the display serif for the crafted, HD feel */
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+    color: var(--color-ink);
+  }
+
+  ::selection {
+    background: var(--color-brass);
+    color: var(--color-ink);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------- Typographic helpers ---------------------------- */
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* Brass gradient text for accent words */
+.text-gradient-brass {
+  background: linear-gradient(100deg, var(--color-brass-glow), var(--color-brass) 48%, var(--color-brass-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Decorative ------------------------------------- */
+.hairline-brass {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--color-brass), transparent);
+}
+
+/* Subtle film grain for the HD, photographic feel. Apply to a
+   position:relative element; renders as an ::before overlay. */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Keyframe accents (motion lib handles the rest) -- */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float { animation: floatY 6s ease-in-out infinite; }
+
+@keyframes kenburns {
+  0% { transform: scale(1.05); }
+  100% { transform: scale(1.16) translate3d(-1.5%, -1.5%, 0); }
+}
+.animate-kenburns { animation: kenburns 24s ease-out infinite alternate; }
+
+@keyframes scrollDot {
+  0% { transform: translateY(0); opacity: 0; }
+  35% { opacity: 1; }
+  70% { transform: translateY(11px); opacity: 0; }
+  100% { opacity: 0; }
+}
+.animate-scrolldot { animation: scrollDot 1.8s var(--ease-expo) infinite; }
+
+/* ---------- Before/After slider range handle --------------- */
+.reveal-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+  touch-action: none;
+}
+.reveal-range:focus-visible {
+  outline: none;
+}
+
+/* ---------- Accessibility: honor reduced motion ------------ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-kenburns,
+  .animate-float,
+  .animate-scrolldot { animation: none !important; }
 }

@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# R & R Remodel and Repair — Website
 
-## Getting Started
+Marketing website for **R & R Remodel and Repair**, a Southwest Florida remodeling
+and repair company: kitchens, baths, flooring, tile, painting & drywall,
+carpentry, and home repair.
 
-First, run the development server:
+A single-page, mobile-first site featuring an interactive **before / after reveal
+slider** that showcases real projects, built around the company's bronze logo.
+
+## Tech stack
+
+- **Next.js 16** (App Router) + **React 19**
+- **Tailwind CSS v4** (CSS-variable theming)
+- **Motion** (Framer Motion) for scroll animations
+- Prerenders as fully **static** HTML — deploys anywhere
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Production build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm run start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Editing content
 
-## Learn More
+All business content — name, phone, email, services, before/after projects, and
+the recent-work gallery — lives in a single file:
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/lib/site.ts
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Project photos: `public/gallery`
+- Brand assets (logo, favicon): `public/brand`
+- Colors & fonts (recolor the whole site here): the `@theme` block in `src/app/globals.css`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To receive quote-form submissions, paste a free
+[Formspree](https://formspree.io) or Netlify Forms endpoint into
+`contact.formEndpoint` in `src/lib/site.ts`. Until then the form runs in a
+friendly demo mode.
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Easiest path: [Vercel](https://vercel.com/new) — import this repo and it deploys
+automatically. Any static host works too.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+📞 (419) 279-1783 · ✉️ rrremodelrepair@gmail.com · Proudly serving Southwest Florida
