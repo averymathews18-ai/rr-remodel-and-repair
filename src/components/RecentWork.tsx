@@ -2,6 +2,7 @@ import { site } from "@/lib/site";
 import { Icon } from "./ui/Icon";
 import { SectionHeading } from "./ui/SectionHeading";
 import { Reveal } from "./ui/motion";
+import { asset } from "@/lib/asset";
 
 export function RecentWork() {
   return (
@@ -28,7 +29,7 @@ export function RecentWork() {
             <Reveal key={w.src} delay={(i % 3) * 0.08} className="break-inside-avoid">
               <figure className="group relative overflow-hidden rounded-2xl border border-cream/10">
                 <img
-                  src={w.src}
+                  src={asset(w.src)}
                   alt={w.title}
                   loading="lazy"
                   className="w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]"

@@ -9,6 +9,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Icon } from "./Icon";
+import { asset } from "@/lib/asset";
 
 type Props = {
   before: string;
@@ -127,7 +128,7 @@ export function BeforeAfterSlider({
     >
       {/* AFTER (base layer) */}
       <img
-        src={after}
+        src={asset(after)}
         alt={afterAlt}
         draggable={false}
         className="pointer-events-none block h-full w-full object-cover"
@@ -135,7 +136,7 @@ export function BeforeAfterSlider({
 
       {/* BEFORE (clipped to the left of the divider) */}
       <img
-        src={before}
+        src={asset(before)}
         alt={beforeAlt}
         draggable={false}
         className="pointer-events-none absolute inset-0 h-full w-full object-cover"

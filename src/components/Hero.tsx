@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { site } from "@/lib/site";
 import { BeforeAfterSlider } from "./ui/BeforeAfterSlider";
 import { Icon } from "./ui/Icon";
+import { asset } from "@/lib/asset";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -35,7 +36,7 @@ export function Hero() {
       {/* immersive darkened real-project backdrop */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <img
-          src="/gallery/cherry-after.jpg"
+          src={asset("/gallery/cherry-after.jpg")}
           alt=""
           className="animate-kenburns h-full w-full object-cover opacity-[0.22]"
         />
@@ -56,7 +57,7 @@ export function Hero() {
           <div className="relative mx-auto mb-8 w-56 sm:w-64 lg:mx-0 lg:w-72">
             <div className="absolute inset-0 -z-0 scale-125 rounded-full bg-brass/25 blur-[60px]" />
             <img
-              src="/brand/logo.png"
+              src={asset("/brand/logo.png")}
               alt={`${site.name} logo`}
               className="animate-float relative w-full drop-shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
             />

@@ -3,6 +3,7 @@ import { Icon } from "./ui/Icon";
 import { Button } from "./ui/Button";
 import { Reveal } from "./ui/motion";
 import { accentize } from "./ui/SectionHeading";
+import { asset } from "@/lib/asset";
 
 export function About() {
   const { about } = site;
@@ -15,7 +16,7 @@ export function About() {
           <div className="absolute -bottom-5 -left-5 h-full w-full rounded-[1.6rem] bg-brass/15" />
           <div className="relative overflow-hidden rounded-[1.6rem] border border-line shadow-lift">
             <img
-              src="/gallery/gray-after.jpg"
+              src={asset("/gallery/gray-after.jpg")}
               alt="Finished kitchen remodel by R&R Remodel and Repair"
               className="aspect-[4/3] w-full object-cover"
             />

@@ -2,6 +2,7 @@ import { site } from "@/lib/site";
 import { Icon } from "./ui/Icon";
 import { SectionHeading } from "./ui/SectionHeading";
 import { Stagger, StaggerItem, Reveal } from "./ui/motion";
+import { asset } from "@/lib/asset";
 
 export function Process() {
   return (
@@ -51,7 +52,7 @@ export function Process() {
           <div className="grid gap-4 sm:grid-cols-2">
             <figure className="overflow-hidden rounded-2xl border border-line shadow-soft">
               <img
-                src="/gallery/progress-2.jpg"
+                src={asset("/gallery/progress-2.jpg")}
                 alt="Kitchen remodel in progress — new cabinets and flooring going in"
                 loading="lazy"
                 className="aspect-[16/10] w-full object-cover"
@@ -59,7 +60,7 @@ export function Process() {
             </figure>
             <figure className="overflow-hidden rounded-2xl border border-line shadow-soft">
               <img
-                src="/gallery/progress-1.jpg"
+                src={asset("/gallery/progress-1.jpg")}
                 alt="New cabinetry installed during an R&R kitchen remodel"
                 loading="lazy"
                 className="aspect-[16/10] w-full object-cover"
