@@ -7,6 +7,8 @@ carpentry, and home repair.
 A single-page, mobile-first site featuring an interactive **before / after reveal
 slider** that showcases real projects, built around the company's bronze logo.
 
+**🔗 Live preview:** https://averymathews18-ai.github.io/rr-remodel-and-repair/
+
 ## Tech stack
 
 - **Next.js 16** (App Router) + **React 19**
@@ -49,8 +51,21 @@ friendly demo mode.
 
 ## Deploy
 
-Easiest path: [Vercel](https://vercel.com/new) — import this repo and it deploys
-automatically. Any static host works too.
+**Currently hosted on GitHub Pages** at the live-preview link above.
+
+To publish updates after editing content, run:
+
+```bash
+bash scripts/deploy-pages.sh
+```
+
+That builds a static export (with the `/rr-remodel-and-repair` base path) and
+pushes it to the `gh-pages` branch, which GitHub Pages serves. Requires the
+[GitHub CLI](https://cli.github.com) authenticated (`gh auth login`).
+
+Prefer a cleaner domain and automatic deploys on every push? Import the repo at
+[Vercel](https://vercel.com/new) — it auto-detects Next.js and serves at the
+domain root (no base path needed).
 
 ---
 
