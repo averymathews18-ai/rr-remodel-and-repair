@@ -47,9 +47,9 @@ export function Contact() {
   return (
     <section id="contact" className="py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <div className="grid overflow-hidden rounded-[2rem] border border-line shadow-lift lg:grid-cols-2">
+        <div className="grid grid-cols-1 overflow-hidden rounded-[2rem] border border-line shadow-lift lg:grid-cols-2">
           {/* LEFT — dark info panel */}
-          <div className="grain relative overflow-hidden bg-ink p-8 text-cream sm:p-12">
+          <div className="grain relative min-w-0 overflow-hidden bg-ink p-8 text-cream sm:p-12">
             <div
               aria-hidden
               className="pointer-events-none absolute -right-16 -top-20 h-72 w-72 rounded-full bg-brass/20 blur-[90px]"
@@ -102,7 +102,7 @@ export function Contact() {
           </div>
 
           {/* RIGHT — form */}
-          <div className="bg-white p-8 sm:p-12">
+          <div className="min-w-0 bg-white p-8 sm:p-12">
             {status === "success" ? (
               <div className="flex h-full flex-col items-center justify-center py-8 text-center">
                 <span className="grid h-16 w-16 place-items-center rounded-full bg-brass/15 text-brass-deep">
