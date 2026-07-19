@@ -54,12 +54,12 @@ export function Hero() {
           className="text-center lg:text-left"
         >
           {/* the logo — front and center, glowing */}
-          <div className="relative mx-auto mb-8 w-56 sm:w-64 lg:mx-0 lg:w-72">
-            <div className="absolute inset-0 -z-0 scale-125 rounded-full bg-brass/25 blur-[60px]" />
+          <div className="relative mx-auto mb-8 w-60 sm:w-72 lg:mx-0 lg:w-80">
+            <div className="absolute inset-0 -z-0 scale-110 rounded-full bg-brass/12 blur-[70px]" />
             <img
-              src={asset("/brand/logo.png")}
+              src={asset("/brand/logo-hero.png")}
               alt={`${site.name} logo`}
-              className="animate-float relative w-full drop-shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
+              className="animate-float relative w-full drop-shadow-[0_6px_16px_rgba(0,0,0,0.4)]"
             />
           </div>
 
