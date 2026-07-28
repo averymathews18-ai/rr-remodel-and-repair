@@ -53,13 +53,22 @@ export function Hero() {
           transition={{ duration: 0.9, ease: EASE }}
           className="text-center lg:text-left"
         >
-          {/* the logo — front and center, glowing */}
+          {/* the logo — front and center, with a soft unified glow around it */}
           <div className="relative mx-auto mb-8 w-60 sm:w-72 lg:mx-0 lg:w-80">
-            <div className="absolute inset-0 -z-0 scale-110 rounded-full bg-brass/12 blur-[70px]" />
+            {/* wide warm underglow */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 scale-[1.55] rounded-[45%] bg-brass/20 blur-[90px]"
+            />
+            {/* closer white aura → modern, backlit feel */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 scale-[1.22] rounded-[42%] bg-white/16 blur-[45px]"
+            />
             <img
               src={asset("/brand/logo-hero.png")}
               alt={`${site.name} logo`}
-              className="animate-float relative w-full drop-shadow-[0_6px_16px_rgba(0,0,0,0.4)]"
+              className="animate-float relative w-full drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)]"
             />
           </div>
 
