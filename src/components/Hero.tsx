@@ -48,6 +48,13 @@ function HeroLogo() {
         my.set(0);
       }}
     >
+      {/* subtle warm glow behind the logo — absolute + first in DOM so it
+          paints beneath the (relatively positioned) logo below */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 scale-[1.35] rounded-full bg-brass/15 blur-[60px]"
+      />
+
       {/* float lives on its own wrapper: a CSS keyframe animating transform
           would otherwise override Motion's inline tilt transform below */}
       <div className="animate-float">
