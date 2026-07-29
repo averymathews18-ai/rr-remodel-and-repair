@@ -1,12 +1,91 @@
 "use client";
 
-import { motion } from "motion/react";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "motion/react";
 import { site } from "@/lib/site";
 import { BeforeAfterSlider } from "./ui/BeforeAfterSlider";
 import { Icon } from "./ui/Icon";
 import { asset } from "@/lib/asset";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+/* Hero logo: springy entrance, gentle float, a metallic light sweep masked to
+   the logo's own shape, and a subtle 3D tilt that follows the cursor. */
+function HeroLogo() {
+  const reduce = useReducedMotion();
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-13, 13]), {
+    stiffness: 160,
+    damping: 18,
+  });
+  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [11, -11]), {
+    stiffness: 160,
+    damping: 18,
+  });
+  const logo = asset("/brand/logo.png");
+
+  return (
+    <motion.div
+      className="relative mx-auto mb-8 w-60 sm:w-72 lg:mx-0 lg:w-80"
+      style={{ perspective: 900 }}
+      initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.72, y: 18 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay: 0.15, type: "spring", stiffness: 130, damping: 11 }}
+      onPointerMove={(e) => {
+        if (reduce) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        mx.set((e.clientX - r.left) / r.width - 0.5);
+        my.set((e.clientY - r.top) / r.height - 0.5);
+      }}
+      onPointerLeave={() => {
+        mx.set(0);
+        my.set(0);
+      }}
+    >
+      {/* float lives on its own wrapper: a CSS keyframe animating transform
+          would otherwise override Motion's inline tilt transform below */}
+      <div className="animate-float">
+      <motion.div
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        whileHover={reduce ? undefined : { scale: 1.05 }}
+        transition={{ type: "spring", stiffness: 220, damping: 20 }}
+        className="relative"
+      >
+        <img
+          src={logo}
+          alt={`${site.name} logo`}
+          className="w-full drop-shadow-[0_10px_26px_rgba(0,0,0,0.55)]"
+        />
+        {/* light sweep — clipped to the logo silhouette so it reads as
+            polished metal catching the light, not a halo */}
+        <span
+          aria-hidden
+          className="animate-sheen pointer-events-none absolute inset-0"
+          style={{
+            WebkitMaskImage: `url(${logo})`,
+            maskImage: `url(${logo})`,
+            WebkitMaskSize: "100% 100%",
+            maskSize: "100% 100%",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            backgroundImage:
+              "linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.30) 46%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.30) 54%, transparent 62%)",
+            backgroundSize: "260% 100%",
+            backgroundRepeat: "no-repeat",
+            mixBlendMode: "screen",
+          }}
+        />
+      </motion.div>
+      </div>
+    </motion.div>
+  );
+}
 
 function Headline() {
   const parts = site.hero.headline.split("*");
@@ -53,20 +132,8 @@ export function Hero() {
           transition={{ duration: 0.9, ease: EASE }}
           className="text-center lg:text-left"
         >
-          {/* the logo — plain, with a subtle pop-in + gentle float */}
-          <motion.div
-            className="relative mx-auto mb-8 w-60 sm:w-72 lg:mx-0 lg:w-80"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 150, damping: 12 }}
-            whileHover={{ scale: 1.04 }}
-          >
-            <img
-              src={asset("/brand/logo.png")}
-              alt={`${site.name} logo`}
-              className="animate-float w-full drop-shadow-[0_8px_22px_rgba(0,0,0,0.5)]"
-            />
-          </motion.div>
+          {/* the logo — 3D tilt on cursor + metallic sheen sweep */}
+          <HeroLogo />
 
           <Headline />
 

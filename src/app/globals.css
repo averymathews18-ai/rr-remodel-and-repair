@@ -129,6 +129,14 @@
 }
 .animate-kenburns { animation: kenburns 24s ease-out infinite alternate; }
 
+/* Metallic light sweep across the logo (masked to the logo's own shape) */
+@keyframes sheen {
+  0%   { background-position: 180% 0; }
+  55%  { background-position: -80% 0; }
+  100% { background-position: -80% 0; }
+}
+.animate-sheen { animation: sheen 6s ease-in-out infinite; }
+
 @keyframes scrollDot {
   0% { transform: translateY(0); opacity: 0; }
   35% { opacity: 1; }
@@ -154,5 +162,6 @@
   html { scroll-behavior: auto; }
   .animate-kenburns,
   .animate-float,
+  .animate-sheen,
   .animate-scrolldot { animation: none !important; }
 }
