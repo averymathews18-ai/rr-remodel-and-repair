@@ -53,24 +53,20 @@ export function Hero() {
           transition={{ duration: 0.9, ease: EASE }}
           className="text-center lg:text-left"
         >
-          {/* the logo — front and center, with a soft unified glow around it */}
-          <div className="relative mx-auto mb-8 w-60 sm:w-72 lg:mx-0 lg:w-80">
-            {/* wide warm underglow */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 scale-[1.55] rounded-[45%] bg-brass/20 blur-[90px]"
-            />
-            {/* closer white aura → modern, backlit feel */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 scale-[1.22] rounded-[42%] bg-white/16 blur-[45px]"
-            />
+          {/* the logo — plain, with a subtle pop-in + gentle float */}
+          <motion.div
+            className="relative mx-auto mb-8 w-60 sm:w-72 lg:mx-0 lg:w-80"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 150, damping: 12 }}
+            whileHover={{ scale: 1.04 }}
+          >
             <img
-              src={asset("/brand/logo-hero.png")}
+              src={asset("/brand/logo.png")}
               alt={`${site.name} logo`}
-              className="animate-float relative w-full drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)]"
+              className="animate-float w-full drop-shadow-[0_8px_22px_rgba(0,0,0,0.5)]"
             />
-          </div>
+          </motion.div>
 
           <Headline />
 
