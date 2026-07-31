@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { site } from "@/lib/site";
 import { BeforeAfterSlider } from "./ui/BeforeAfterSlider";
 import { Icon } from "./ui/Icon";
@@ -14,82 +8,49 @@ import { asset } from "@/lib/asset";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/* Hero logo: springy entrance, gentle float, a metallic light sweep masked to
-   the logo's own shape, and a subtle 3D tilt that follows the cursor. */
+/* Hero logo: the kit-built bronze plate film, ping-pong looped so it runs
+   continuously with no visible restart, radially masked so its walnut edges
+   dissolve into the hero background. Reduced-motion users get the still. */
 function HeroLogo() {
   const reduce = useReducedMotion();
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-13, 13]), {
-    stiffness: 160,
-    damping: 18,
-  });
-  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [11, -11]), {
-    stiffness: 160,
-    damping: 18,
-  });
-  const logo = asset("/brand/logo.png");
 
-  return (
-    <motion.div
-      className="relative mx-auto mb-8 w-60 sm:w-72 lg:mx-0 lg:w-80"
-      style={{ perspective: 900 }}
-      initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.72, y: 18 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ delay: 0.15, type: "spring", stiffness: 130, damping: 11 }}
-      onPointerMove={(e) => {
-        if (reduce) return;
-        const r = e.currentTarget.getBoundingClientRect();
-        mx.set((e.clientX - r.left) / r.width - 0.5);
-        my.set((e.clientY - r.top) / r.height - 0.5);
-      }}
-      onPointerLeave={() => {
-        mx.set(0);
-        my.set(0);
-      }}
-    >
-      {/* subtle warm glow behind the logo — absolute + first in DOM so it
-          paints beneath the (relatively positioned) logo below */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 scale-[1.35] rounded-full bg-brass/15 blur-[60px]"
-      />
-
-      {/* float lives on its own wrapper: a CSS keyframe animating transform
-          would otherwise override Motion's inline tilt transform below */}
-      <div className="animate-float">
-      <motion.div
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        whileHover={reduce ? undefined : { scale: 1.05 }}
-        transition={{ type: "spring", stiffness: 220, damping: 20 }}
-        className="relative"
-      >
+  if (reduce) {
+    return (
+      <div className="relative mx-auto mb-8 w-60 sm:w-72 lg:mx-0 lg:w-80">
         <img
-          src={logo}
+          src={asset("/brand/logo.png")}
           alt={`${site.name} logo`}
           className="w-full drop-shadow-[0_10px_26px_rgba(0,0,0,0.55)]"
         />
-        {/* light sweep — clipped to the logo silhouette so it reads as
-            polished metal catching the light, not a halo */}
-        <span
-          aria-hidden
-          className="animate-sheen pointer-events-none absolute inset-0"
-          style={{
-            WebkitMaskImage: `url(${logo})`,
-            maskImage: `url(${logo})`,
-            WebkitMaskSize: "100% 100%",
-            maskSize: "100% 100%",
-            WebkitMaskRepeat: "no-repeat",
-            maskRepeat: "no-repeat",
-            backgroundImage:
-              "linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.30) 46%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.30) 54%, transparent 62%)",
-            backgroundSize: "260% 100%",
-            backgroundRepeat: "no-repeat",
-            mixBlendMode: "screen",
-          }}
-        />
-      </motion.div>
       </div>
+    );
+  }
+
+  return (
+    <motion.div
+      className="relative mx-auto -mt-8 mb-2 w-[21rem] sm:w-[24rem] lg:-ml-14 lg:mx-0 lg:w-[27rem]"
+      initial={{ opacity: 0, scale: 0.85 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.15, type: "spring", stiffness: 130, damping: 13 }}
+    >
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster={asset("/brand/logo-loop-poster.jpg")}
+        aria-label={`${site.name} logo`}
+        className="block w-full"
+        style={{
+          WebkitMaskImage:
+            "radial-gradient(ellipse at center, black 48%, rgba(0,0,0,0.55) 64%, transparent 79%)",
+          maskImage:
+            "radial-gradient(ellipse at center, black 48%, rgba(0,0,0,0.55) 64%, transparent 79%)",
+        }}
+      >
+        <source src={asset("/brand/logo-loop.mp4")} type="video/mp4" />
+      </video>
     </motion.div>
   );
 }
@@ -139,7 +100,8 @@ export function Hero() {
           transition={{ duration: 0.9, ease: EASE }}
           className="text-center lg:text-left"
         >
-          {/* the logo — 3D tilt on cursor + metallic sheen sweep */}
+          {/* the logo — continuously looping bronze plate film, edge-masked
+              so it blends into the hero background */}
           <HeroLogo />
 
           <Headline />
