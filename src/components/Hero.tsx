@@ -196,12 +196,13 @@ export function Hero() {
             <BeforeAfterSlider
               before={site.gallery[0].before}
               after={site.gallery[0].after}
-              beforeAlt="Dated dining room before R&R remodel"
-              afterAlt="Open kitchen and dining after R&R remodel"
+              beforeAlt="Gray kitchen mid-remodel — cabinets set, before counters and tile"
+              afterAlt="Finished, staged gray kitchen by R&R"
+              beforeLabel={site.gallery[0].beforeLabel}
               className="aspect-[4/3] w-full"
             />
             <div className="flex items-center justify-between px-2 pb-1 pt-3">
-              <p className="text-sm font-medium text-cream/80">Real R&R kitchen & dining remodel</p>
+              <p className="text-sm font-medium text-cream/80">Real R&R kitchen remodel</p>
               <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-brass">
                 <Icon name="drag" size={14} /> Drag to reveal
               </span>

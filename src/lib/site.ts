@@ -149,20 +149,25 @@ export const site = {
   ] satisfies Service[],
 
   /* ---- Before / After showcase (real projects) ------------
-     Pairings verified against the photos themselves:
-     - gray: true before/after of one home — the dated dining room
-       became part of the new open kitchen (same dining set visible).
+     Pairings verified against the photos themselves — every pair is
+     the SAME room, confirmed by in-frame landmarks:
+     - gray: mid-build shot → staged finish (same windows, fans,
+       flooring, and baseboard heater visible in both frames).
+       NOTE (owner-confirmed): the dated dining-room photo
+       (gray-before.jpg) is a DIFFERENT project — never pair it
+       with the gray kitchen.
      - white: same kitchen both frames; the honest delta is the tile.
      - cherry: we only have mid-build shots of this house, so it is
        labeled "Mid-build", not "Before".                            */
   gallery: [
     {
-      title: "Dated dining room → open kitchen",
+      title: "Halfway there → move-in ready",
       tag: "Kitchen Remodel",
-      before: "/gallery/gray-before.jpg",
+      before: "/gallery/work-gray-2.jpg",
       after: "/gallery/gray-staged-wide.jpg",
+      beforeLabel: "Mid-build",
       blurb:
-        "Same dining set, whole new room. The closed-off dining space now flows into a brand-new kitchen — gray shaker cabinets, a white herringbone backsplash, and plank flooring throughout.",
+        "Cabinets set, temporary counters, bare walls at the halfway mark — finished with white counters, a white herringbone backsplash, stainless appliances, and a fully staged eat-in kitchen.",
     },
     {
       title: "Blank wall → bold backsplash",

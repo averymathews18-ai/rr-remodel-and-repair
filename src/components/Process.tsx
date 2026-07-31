@@ -47,26 +47,16 @@ export function Process() {
           </Stagger>
         </div>
 
-        {/* real craftsmanship — in-progress shots */}
+        {/* real craftsmanship — in-progress shot */}
         <Reveal className="mt-16">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <figure className="overflow-hidden rounded-2xl border border-line shadow-soft">
-              <img
-                src={asset("/gallery/progress-2.jpg")}
-                alt="Kitchen remodel in progress — new cabinets and flooring going in"
-                loading="lazy"
-                className="aspect-[16/10] w-full object-cover"
-              />
-            </figure>
-            <figure className="overflow-hidden rounded-2xl border border-line shadow-soft">
-              <img
-                src={asset("/gallery/work-gray-2.jpg")}
-                alt="Gray kitchen mid-remodel — cabinets installed, counters and tile still to come"
-                loading="lazy"
-                className="aspect-[16/10] w-full object-cover"
-              />
-            </figure>
-          </div>
+          <figure className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-line shadow-soft">
+            <img
+              src={asset("/gallery/progress-2.jpg")}
+              alt="Kitchen remodel in progress — new cabinets and flooring going in"
+              loading="lazy"
+              className="aspect-[16/9] w-full object-cover"
+            />
+          </figure>
           <p className="mt-4 text-center text-sm text-stone">
             From tear-out to the final detail, the same crew handles your project start to finish.
           </p>
