@@ -22,8 +22,8 @@ type Props = {
   className?: string;
 };
 
-const START = 82; // mostly "before" showing, so the wipe reveals the "after"
-const SETTLE = 50;
+const START = 88; // mostly "before" showing, so the wipe reveals the "after"
+const SETTLE = 68; // rest before-dominant: the "before" stays the larger share
 
 export function BeforeAfterSlider({
   before,

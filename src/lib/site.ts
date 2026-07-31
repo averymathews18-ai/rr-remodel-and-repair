@@ -161,13 +161,13 @@ export const site = {
        labeled "Mid-build", not "Before".                            */
   gallery: [
     {
-      title: "Halfway there → move-in ready",
+      title: "Mid-build → finished cherry kitchen",
       tag: "Kitchen Remodel",
-      before: "/gallery/work-gray-2.jpg",
-      after: "/gallery/gray-staged-wide.jpg",
+      before: "/gallery/progress-2.jpg",
+      after: "/gallery/work-cherry-1.jpg",
       beforeLabel: "Mid-build",
       blurb:
-        "Cabinets set, temporary counters, bare walls at the halfway mark — finished with white counters, a white herringbone backsplash, stainless appliances, and a fully staged eat-in kitchen.",
+        "Plywood counters, stripped walls, bare subfloor at the halfway mark — finished with cherry cabinetry, speckled quartz counters, a stone-tile backsplash, and warm plank flooring.",
     },
     {
       title: "Blank wall → bold backsplash",
@@ -178,19 +178,19 @@ export const site = {
         "A black hexagon-tile backsplash turned this galley's bare wall into the feature of the room — set clean, grouted bright, and finished around the existing fixtures.",
     },
     {
-      title: "Mid-build → finished cherry kitchen",
+      title: "Halfway there → move-in ready",
       tag: "Kitchen Remodel",
-      before: "/gallery/progress-1.jpg",
-      after: "/gallery/cherry-after.jpg",
+      before: "/gallery/work-gray-2.jpg",
+      after: "/gallery/gray-staged-wide.jpg",
       beforeLabel: "Mid-build",
       blurb:
-        "Caught partway through: cabinets set, backsplash torn out, bare subfloor. Finished with cherry cabinetry, granite counters, a stone-tile backsplash, and warm plank flooring.",
+        "Cabinets set, temporary counters, bare walls at the halfway mark — finished with white counters, a white herringbone backsplash, stainless appliances, and a fully staged eat-in kitchen.",
     },
   ] satisfies GalleryItem[],
 
   /* ---- Recent finished work (real photos) ----------------- */
   recentWork: [
-    { src: "/gallery/work-cherry-1.jpg", tag: "Kitchen", title: "Cherry cabinets & granite peninsula", portrait: true },
+    { src: "/gallery/cherry-after.jpg", tag: "Kitchen", title: "Cherry kitchen & granite corner" },
     { src: "/gallery/work-gray-4.jpg", tag: "Kitchen", title: "Gray shaker kitchen & eat-in dining", portrait: true },
     { src: "/gallery/work-cherry-3.jpg", tag: "Tile & Counters", title: "Stone backsplash & granite" },
     { src: "/gallery/work-gray-3.jpg", tag: "Tile Work", title: "Herringbone subway backsplash" },

@@ -196,8 +196,8 @@ export function Hero() {
             <BeforeAfterSlider
               before={site.gallery[0].before}
               after={site.gallery[0].after}
-              beforeAlt="Gray kitchen mid-remodel — cabinets set, before counters and tile"
-              afterAlt="Finished, staged gray kitchen by R&R"
+              beforeAlt="Cherry kitchen mid-remodel — cabinets set, temporary counters, stripped walls"
+              afterAlt="Finished cherry kitchen with quartz counters and stone backsplash by R&R"
               beforeLabel={site.gallery[0].beforeLabel}
               className="aspect-[4/3] w-full"
             />

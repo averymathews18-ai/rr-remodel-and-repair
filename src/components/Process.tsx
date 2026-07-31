@@ -51,8 +51,8 @@ export function Process() {
         <Reveal className="mt-16">
           <figure className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-line shadow-soft">
             <img
-              src={asset("/gallery/progress-2.jpg")}
-              alt="Kitchen remodel in progress — new cabinets and flooring going in"
+              src={asset("/gallery/progress-1.jpg")}
+              alt="Kitchen remodel in progress — new cabinets in, backsplash and counters to come"
               loading="lazy"
               className="aspect-[16/9] w-full object-cover"
             />
