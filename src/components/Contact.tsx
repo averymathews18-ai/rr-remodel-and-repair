@@ -77,14 +77,14 @@ export function Contact() {
                         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-cream/[0.06] text-brass ring-1 ring-cream/10 transition-colors group-hover:bg-brass group-hover:text-ink">
                           <Icon name={d.icon} size={19} />
                         </span>
-                        <span className="font-medium">{d.label}</span>
+                        <span className="min-w-0 font-medium [overflow-wrap:anywhere]">{d.label}</span>
                       </a>
                     ) : (
                       <span className="flex items-center gap-4">
                         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-cream/[0.06] text-brass ring-1 ring-cream/10">
                           <Icon name={d.icon} size={19} />
                         </span>
-                        <span className="font-medium text-cream/85">{d.label}</span>
+                        <span className="min-w-0 font-medium text-cream/85 [overflow-wrap:anywhere]">{d.label}</span>
                       </span>
                     )}
                   </li>

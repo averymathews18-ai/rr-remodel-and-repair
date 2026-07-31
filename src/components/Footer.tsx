@@ -69,7 +69,8 @@ export function Footer() {
       </div>
 
       {/* bottom bar */}
-      <div className="border-t border-ink-mute">
+      {/* pb clears the sticky mobile call bar so © / back-to-top stay visible */}
+      <div className="border-t border-ink-mute pb-24 lg:pb-0">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-6 text-sm sm:flex-row sm:px-8">
           <p>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
