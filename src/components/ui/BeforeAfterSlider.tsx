@@ -16,6 +16,9 @@ type Props = {
   after: string;
   beforeAlt?: string;
   afterAlt?: string;
+  /* chip labels — override for honest non-"before" pairings, e.g. "Mid-build" */
+  beforeLabel?: string;
+  afterLabel?: string;
   className?: string;
 };
 
@@ -27,6 +30,8 @@ export function BeforeAfterSlider({
   after,
   beforeAlt = "Before",
   afterAlt = "After",
+  beforeLabel = "Before",
+  afterLabel = "After",
   className = "",
 }: Props) {
   const [pos, setPos] = useState(START);
@@ -145,10 +150,10 @@ export function BeforeAfterSlider({
 
       {/* corner labels */}
       <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-ink/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-cream backdrop-blur-sm">
-        Before
+        {beforeLabel}
       </span>
       <span className="pointer-events-none absolute right-4 top-4 rounded-full bg-brass px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-ink">
-        After
+        {afterLabel}
       </span>
 
       {/* divider + handle */}

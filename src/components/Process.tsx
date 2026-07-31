@@ -60,8 +60,8 @@ export function Process() {
             </figure>
             <figure className="overflow-hidden rounded-2xl border border-line shadow-soft">
               <img
-                src={asset("/gallery/progress-1.jpg")}
-                alt="New cabinetry installed during an R&R kitchen remodel"
+                src={asset("/gallery/work-gray-2.jpg")}
+                alt="Gray kitchen mid-remodel — cabinets installed, counters and tile still to come"
                 loading="lazy"
                 className="aspect-[16/10] w-full object-cover"
               />

@@ -24,6 +24,8 @@ export type GalleryItem = {
   before: string;
   after: string;
   blurb: string;
+  /* chip label override for honest non-"before" pairings (e.g. "Mid-build") */
+  beforeLabel?: string;
 };
 
 export type WorkItem = { src: string; tag: string; title: string; portrait?: boolean };
@@ -146,42 +148,51 @@ export const site = {
     },
   ] satisfies Service[],
 
-  /* ---- Before / After showcase (real projects) ------------ */
+  /* ---- Before / After showcase (real projects) ------------
+     Pairings verified against the photos themselves:
+     - gray: true before/after of one home — the dated dining room
+       became part of the new open kitchen (same dining set visible).
+     - white: same kitchen both frames; the honest delta is the tile.
+     - cherry: we only have mid-build shots of this house, so it is
+       labeled "Mid-build", not "Before".                            */
   gallery: [
     {
-      title: "Oak & laminate → cherry & granite",
+      title: "Dated dining room → open kitchen",
       tag: "Kitchen Remodel",
-      before: "/gallery/cherry-before.jpg",
-      after: "/gallery/cherry-after.jpg",
+      before: "/gallery/gray-before.jpg",
+      after: "/gallery/gray-staged-wide.jpg",
       blurb:
-        "Out with the honey-oak cabinets and mustard laminate — in with rich cherry cabinetry, speckled granite counters, a full stone-tile backsplash, and warm wood-look flooring.",
+        "Same dining set, whole new room. The closed-off dining space now flows into a brand-new kitchen — gray shaker cabinets, a white herringbone backsplash, and plank flooring throughout.",
     },
     {
-      title: "Dated galley → bright & bold",
-      tag: "Kitchen Refresh",
+      title: "Blank wall → bold backsplash",
+      tag: "Tile Work",
       before: "/gallery/white-before.jpg",
       after: "/gallery/white-after.jpg",
       blurb:
-        "A compact kitchen reborn: refreshed cabinets, a striking black hexagon-tile backsplash, and clean modern fixtures completely changed the feel of the room.",
+        "A black hexagon-tile backsplash turned this galley's bare wall into the feature of the room — set clean, grouted bright, and finished around the existing fixtures.",
     },
     {
-      title: "Closed & dated → open gray shaker",
+      title: "Mid-build → finished cherry kitchen",
       tag: "Kitchen Remodel",
-      before: "/gallery/gray-before.jpg",
-      after: "/gallery/gray-after.jpg",
+      before: "/gallery/progress-1.jpg",
+      after: "/gallery/cherry-after.jpg",
+      beforeLabel: "Mid-build",
       blurb:
-        "Gray shaker cabinets, quartz counters, a white herringbone backsplash, and fresh flooring opened this tired space into a bright, modern open-concept kitchen.",
+        "Caught partway through: cabinets set, backsplash torn out, bare subfloor. Finished with cherry cabinetry, granite counters, a stone-tile backsplash, and warm plank flooring.",
     },
   ] satisfies GalleryItem[],
 
   /* ---- Recent finished work (real photos) ----------------- */
   recentWork: [
     { src: "/gallery/work-cherry-1.jpg", tag: "Kitchen", title: "Cherry cabinets & granite peninsula", portrait: true },
-    { src: "/gallery/work-gray-2.jpg", tag: "Kitchen", title: "Open-concept gray shaker", portrait: true },
+    { src: "/gallery/work-gray-4.jpg", tag: "Kitchen", title: "Gray shaker kitchen & eat-in dining", portrait: true },
     { src: "/gallery/work-cherry-3.jpg", tag: "Tile & Counters", title: "Stone backsplash & granite" },
     { src: "/gallery/work-gray-3.jpg", tag: "Tile Work", title: "Herringbone subway backsplash" },
-    { src: "/gallery/work-gray-1.jpg", tag: "Flooring", title: "Plank flooring & stainless", portrait: true },
+    { src: "/gallery/work-gray-5.jpg", tag: "Appliances", title: "Gas range & stainless vent hood", portrait: true },
     { src: "/gallery/work-cherry-2.jpg", tag: "Kitchen", title: "Cherry kitchen & dining nook", portrait: true },
+    { src: "/gallery/work-gray-1.jpg", tag: "Flooring", title: "Plank flooring & stainless", portrait: true },
+    { src: "/gallery/work-gray-6.jpg", tag: "Open Concept", title: "Kitchen open to the living room", portrait: true },
   ] satisfies WorkItem[],
 
   /* ---- Process (honest, free-estimate led) ---------------- */

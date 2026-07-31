@@ -36,8 +36,9 @@ export function Showcase() {
                       <BeforeAfterSlider
                         before={item.before}
                         after={item.after}
-                        beforeAlt={`${item.tag} before`}
+                        beforeAlt={`${item.tag} — ${item.beforeLabel ?? "before"}`}
                         afterAlt={`${item.tag} after`}
+                        beforeLabel={item.beforeLabel}
                         className="aspect-[4/3] w-full"
                       />
                     </div>
