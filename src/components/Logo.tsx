@@ -9,7 +9,7 @@ export function Logo({ className = "" }: { className?: string }) {
   return (
     <span className={`flex items-center gap-3 ${className}`}>
       <img
-        src={asset("/brand/logo-mark.png")}
+        src={asset("/brand/logo-mark.webp")}
         alt={`${site.name} logo`}
         className="h-11 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]"
       />

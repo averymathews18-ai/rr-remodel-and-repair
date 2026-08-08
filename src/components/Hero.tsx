@@ -28,7 +28,7 @@ function HeroLogo() {
     stiffness: 160,
     damping: 18,
   });
-  const logo = asset("/brand/logo.png");
+  const logo = asset("/brand/logo.webp");
 
   return (
     <motion.div
@@ -67,6 +67,7 @@ function HeroLogo() {
         <img
           src={logo}
           alt={`${site.name} logo`}
+          fetchPriority="high"
           className="w-full drop-shadow-[0_10px_26px_rgba(0,0,0,0.55)]"
         />
         {/* light sweep — clipped to the logo silhouette so it reads as
@@ -124,6 +125,8 @@ export function Hero() {
         <img
           src={asset("/gallery/cherry-after.jpg")}
           alt=""
+          fetchPriority="low"
+          decoding="async"
           className="animate-kenburns h-full w-full object-cover opacity-[0.22]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/85 via-ink/80 to-ink" />
