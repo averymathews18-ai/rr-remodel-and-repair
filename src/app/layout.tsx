@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
   },
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL("https://rr-remodel-and-repair.vercel.app"),
 };
 
 export default function RootLayout({
