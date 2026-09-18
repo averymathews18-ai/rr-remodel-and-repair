@@ -1,40 +1,45 @@
-"use client";
+/* Scroll-reveal primitives — CSS transitions driven by ONE shared
+   IntersectionObserver (see RevealObserver). These are SERVER components:
+   they ship no JavaScript and create no client boundary, which is what
+   keeps the page's hydration cost near zero on phones.
 
-/* Reusable scroll-reveal primitives built on `motion`.
-   - <Reveal>      : fade + rise a single block into view once.
-   - <Stagger>     : parent that staggers its <StaggerItem> children.
-   - <StaggerItem> : individual staggered child.
-   All respect prefers-reduced-motion automatically. */
+   Previously these were framer-motion components; motion added ~158KB of
+   JS and pulled every animated section into the client bundle.
 
-import { motion, useReducedMotion, type Variants } from "motion/react";
-import type { ReactNode } from "react";
+   - <Reveal>      fade + rise a block into view once.
+   - <Stagger>     parent whose children come in one after another (the
+                   delay is pure CSS, :nth-child based).
+   - <StaggerItem> a single staggered child.
+   prefers-reduced-motion is honored in globals.css. */
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+import type { CSSProperties, ReactNode } from "react";
+
+type RevealStyle = CSSProperties & {
+  "--reveal-delay"?: string;
+  "--reveal-y"?: string;
+};
 
 export function Reveal({
   children,
   className,
   delay = 0,
   y = 26,
-  once = true,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
   y?: number;
+  /** kept for source compatibility; reveals always run once */
   once?: boolean;
 }) {
-  const reduce = useReducedMotion();
+  const style: RevealStyle = {
+    "--reveal-delay": `${delay}s`,
+    ...(y !== 26 ? { "--reveal-y": `${y}px` } : {}),
+  };
   return (
-    <motion.div
-      className={className}
-      initial={reduce ? { opacity: 0 } : { opacity: 0, y }}
-      whileInView={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
-      viewport={{ once, margin: "-90px" }}
-      transition={{ duration: 0.75, ease: EASE, delay }}
-    >
+    <div data-reveal className={className} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -42,27 +47,18 @@ export function Stagger({
   children,
   className,
   delay = 0,
-  gap = 0.1,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
+  /** kept for source compatibility; the gap is set in CSS */
   gap?: number;
 }) {
-  const variants: Variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: gap, delayChildren: delay } },
-  };
+  const style: RevealStyle = { "--reveal-delay": `${delay}s` };
   return (
-    <motion.div
-      className={className}
-      variants={variants}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
-    >
+    <div data-stagger className={className} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -75,18 +71,10 @@ export function StaggerItem({
   className?: string;
   y?: number;
 }) {
-  const reduce = useReducedMotion();
-  const variants: Variants = {
-    hidden: reduce ? { opacity: 0 } : { opacity: 0, y },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, ease: EASE },
-    },
-  };
+  const style: RevealStyle = y !== 24 ? { "--reveal-y": `${y}px` } : {};
   return (
-    <motion.div className={className} variants={variants}>
+    <div data-stagger-item className={className} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }

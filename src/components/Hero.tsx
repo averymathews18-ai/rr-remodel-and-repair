@@ -1,97 +1,58 @@
-"use client";
-
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "motion/react";
 import { site } from "@/lib/site";
 import { BeforeAfterSlider } from "./ui/BeforeAfterSlider";
 import { Icon } from "./ui/Icon";
+import { Img } from "./ui/Img";
 import { asset } from "@/lib/asset";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-
-/* Hero logo: springy entrance, gentle float, a metallic light sweep masked to
-   the logo's own shape, and a subtle 3D tilt that follows the cursor. */
+/* Hero logo: springy CSS entrance, gentle float, and a metallic light
+   sweep masked to the logo's own shape (desktop only — see globals.css).
+   This used to be a framer-motion client component with cursor-tracking
+   springs; the springs cost JS on every pointer move and did nothing on a
+   phone, so the whole thing is CSS now and the hero ships no JavaScript. */
 function HeroLogo() {
-  const reduce = useReducedMotion();
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-13, 13]), {
-    stiffness: 160,
-    damping: 18,
-  });
-  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [11, -11]), {
-    stiffness: 160,
-    damping: 18,
-  });
-  const logo = asset("/brand/logo.webp");
-
   return (
-    <motion.div
-      className="relative mx-auto mb-8 w-60 sm:w-72 lg:mx-0 lg:w-80"
-      style={{ perspective: 900 }}
-      initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.72, y: 18 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ delay: 0.15, type: "spring", stiffness: 130, damping: 11 }}
-      onPointerMove={(e) => {
-        if (reduce) return;
-        const r = e.currentTarget.getBoundingClientRect();
-        mx.set((e.clientX - r.left) / r.width - 0.5);
-        my.set((e.clientY - r.top) / r.height - 0.5);
-      }}
-      onPointerLeave={() => {
-        mx.set(0);
-        my.set(0);
-      }}
-    >
-      {/* subtle warm glow behind the logo — absolute + first in DOM so it
-          paints beneath the (relatively positioned) logo below */}
+    <div className="hero-pop relative mx-auto mb-8 w-60 sm:w-72 lg:mx-0 lg:w-80">
+      {/* warm glow behind the logo — gradient, not a blur filter */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 scale-[1.35] rounded-full bg-brass/15 blur-[60px]"
+        className="glow-brass pointer-events-none absolute inset-0 scale-[1.45] rounded-full"
       />
 
-      {/* float lives on its own wrapper: a CSS keyframe animating transform
-          would otherwise override Motion's inline tilt transform below */}
+      {/* float lives on its own wrapper so the hover scale below can own
+          the inner transform without the two fighting */}
       <div className="animate-float">
-      <motion.div
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        whileHover={reduce ? undefined : { scale: 1.05 }}
-        transition={{ type: "spring", stiffness: 220, damping: 20 }}
-        className="relative"
-      >
-        <img
-          src={logo}
-          alt={`${site.name} logo`}
-          fetchPriority="high"
-          className="w-full drop-shadow-[0_10px_26px_rgba(0,0,0,0.55)]"
-        />
-        {/* light sweep — clipped to the logo silhouette so it reads as
-            polished metal catching the light, not a halo */}
-        <span
-          aria-hidden
-          className="animate-sheen pointer-events-none absolute inset-0"
-          style={{
-            WebkitMaskImage: `url(${logo})`,
-            maskImage: `url(${logo})`,
-            WebkitMaskSize: "100% 100%",
-            maskSize: "100% 100%",
-            WebkitMaskRepeat: "no-repeat",
-            maskRepeat: "no-repeat",
-            backgroundImage:
-              "linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.30) 46%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.30) 54%, transparent 62%)",
-            backgroundSize: "260% 100%",
-            backgroundRepeat: "no-repeat",
-            mixBlendMode: "screen",
-          }}
-        />
-      </motion.div>
+        <div className="relative transition-transform duration-500 ease-out hover:scale-[1.04]">
+          <Img
+            base="logo"
+            variant="l"
+            sizes="(min-width: 1024px) 320px, (min-width: 640px) 288px, 240px"
+            alt={`${site.name} logo`}
+            priority
+            className="w-full drop-shadow-[0_10px_26px_rgba(0,0,0,0.55)]"
+          />
+          {/* light sweep, clipped to the logo silhouette. The mask points at
+              the 700px rung, the same file a retina desktop already picked,
+              so it costs no extra download there and nothing at all on phones. */}
+          <span
+            aria-hidden
+            className="animate-sheen pointer-events-none absolute inset-0"
+            style={{
+              WebkitMaskImage: `url(${asset("/img/logo--l-700.webp")})`,
+              maskImage: `url(${asset("/img/logo--l-700.webp")})`,
+              WebkitMaskSize: "100% 100%",
+              maskSize: "100% 100%",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              backgroundImage:
+                "linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.30) 46%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.30) 54%, transparent 62%)",
+              backgroundSize: "260% 100%",
+              backgroundRepeat: "no-repeat",
+              mixBlendMode: "screen",
+            }}
+          />
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -122,27 +83,22 @@ export function Hero() {
     >
       {/* immersive darkened real-project backdrop */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <img
-          src={asset("/gallery/cherry-after.jpg")}
+        <Img
+          base="cherry-after"
+          variant="bd"
+          sizes="100vw"
           alt=""
-          fetchPriority="low"
-          decoding="async"
+          eager
           className="animate-kenburns h-full w-full object-cover opacity-[0.22]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/85 via-ink/80 to-ink" />
-        <div className="absolute -top-40 right-[-10%] h-[38rem] w-[38rem] rounded-full bg-brass/20 blur-[130px]" />
-        <div className="absolute bottom-[-14rem] left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-brass-deep/20 blur-[130px]" />
+        <div className="glow-brass absolute -top-40 right-[-10%] h-[38rem] w-[38rem] rounded-full" />
+        <div className="glow-brass-deep absolute bottom-[-14rem] left-[-12rem] h-[34rem] w-[34rem] rounded-full" />
       </div>
 
       <div className="relative z-10 mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-5 pb-20 pt-28 sm:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-12 lg:pt-24">
         {/* LEFT — logo + copy */}
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: EASE }}
-          className="text-center lg:text-left"
-        >
-          {/* the logo — 3D tilt on cursor + metallic sheen sweep */}
+        <div className="hero-rise text-center lg:text-left">
           <HeroLogo />
 
           <Headline />
@@ -186,22 +142,19 @@ export function Hero() {
               <Icon name="pin" size={16} className="text-brass" /> {site.serviceArea.replace("Proudly serving ", "")}
             </span>
           </div>
-        </motion.div>
+        </div>
 
         {/* RIGHT — before/after reveal */}
-        <motion.div
-          initial={{ opacity: 0, y: 36, scale: 0.97 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1, ease: EASE, delay: 0.15 }}
-          className="relative"
-        >
-          <div className="relative rounded-[1.6rem] border border-cream/10 bg-cream/[0.04] p-3 shadow-lift backdrop-blur-sm">
+        <div className="hero-rise hero-late relative">
+          <div className="relative rounded-[1.6rem] border border-cream/10 bg-cream/[0.04] p-3 shadow-lift lg:backdrop-blur-sm">
             <BeforeAfterSlider
               before={site.gallery[0].before}
               after={site.gallery[0].after}
               beforeAlt="Cherry kitchen mid-remodel — cabinets set, temporary counters, stripped walls"
               afterAlt="Finished cherry kitchen with quartz counters and stone backsplash by R&R"
               beforeLabel={site.gallery[0].beforeLabel}
+              sizes="(min-width: 1024px) 46vw, 92vw"
+              eager
               className="aspect-[4/3] w-full"
             />
             <div className="flex items-center justify-between px-2 pb-1 pt-3">
@@ -211,7 +164,7 @@ export function Hero() {
               </span>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* scroll hint */}

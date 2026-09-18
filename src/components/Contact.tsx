@@ -52,7 +52,7 @@ export function Contact() {
           <div className="grain relative min-w-0 overflow-hidden bg-ink p-8 text-cream sm:p-12">
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-16 -top-20 h-72 w-72 rounded-full bg-brass/20 blur-[90px]"
+              className="glow-brass pointer-events-none absolute -right-16 -top-20 h-72 w-72 rounded-full"
             />
             <div className="relative z-10">
               <div className="flex items-center gap-3">

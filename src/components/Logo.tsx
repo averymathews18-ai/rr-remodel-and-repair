@@ -1,5 +1,5 @@
 import { site } from "@/lib/site";
-import { asset } from "@/lib/asset";
+import { Img } from "./ui/Img";
 
 /* Real R&R brand lockup: the bronze tools emblem (transparent PNG) +
    a text wordmark. The emblem is fixed bronze; the wordmark uses
@@ -8,9 +8,12 @@ import { asset } from "@/lib/asset";
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <span className={`flex items-center gap-3 ${className}`}>
-      <img
-        src={asset("/brand/logo-mark.webp")}
+      <Img
+        base="logo-mark"
+        variant="l"
+        sizes="44px"
         alt={`${site.name} logo`}
+        eager
         className="h-11 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]"
       />
       <span className="flex flex-col leading-none">

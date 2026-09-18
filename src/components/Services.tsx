@@ -21,7 +21,7 @@ export function Services() {
             <StaggerItem key={s.title}>
               <article className="group relative h-full overflow-hidden rounded-2xl border border-line bg-white p-8 shadow-soft transition-all duration-500 hover:-translate-y-1.5 hover:border-brass/40 hover:shadow-lift">
                 {/* corner wash */}
-                <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-brass/10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="glow-brass pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                 <div className="relative">
                   <span className="grid h-14 w-14 place-items-center rounded-xl bg-ink text-brass transition-colors duration-500 group-hover:bg-brass group-hover:text-ink">

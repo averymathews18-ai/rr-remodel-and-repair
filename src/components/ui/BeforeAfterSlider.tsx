@@ -9,7 +9,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Icon } from "./Icon";
-import { asset } from "@/lib/asset";
+import { Img, baseOf } from "./Img";
 
 type Props = {
   before: string;
@@ -19,6 +19,10 @@ type Props = {
   /* chip labels — override for honest non-"before" pairings, e.g. "Mid-build" */
   beforeLabel?: string;
   afterLabel?: string;
+  /* real rendered width, for the responsive srcset */
+  sizes?: string;
+  /* above the fold: fetch immediately instead of lazily */
+  eager?: boolean;
   className?: string;
 };
 
@@ -32,6 +36,8 @@ export function BeforeAfterSlider({
   afterAlt = "After",
   beforeLabel = "Before",
   afterLabel = "After",
+  sizes = "(min-width: 1024px) 46vw, 92vw",
+  eager = false,
   className = "",
 }: Props) {
   const [pos, setPos] = useState(START);
@@ -131,18 +137,25 @@ export function BeforeAfterSlider({
       style={{ touchAction: "pan-y" }}
       onPointerDown={(e) => beginDrag(e.clientX)}
     >
-      {/* AFTER (base layer) */}
-      <img
-        src={asset(after)}
+      {/* AFTER (base layer). The c43 rungs are pre-cropped to this box's
+          4:3 aspect, so object-cover throws away nothing we downloaded. */}
+      <Img
+        base={baseOf(after)}
+        variant="c43"
+        sizes={sizes}
         alt={afterAlt}
+        eager={eager}
         draggable={false}
         className="pointer-events-none block h-full w-full object-cover"
       />
 
       {/* BEFORE (clipped to the left of the divider) */}
-      <img
-        src={asset(before)}
+      <Img
+        base={baseOf(before)}
+        variant="c43"
+        sizes={sizes}
         alt={beforeAlt}
+        eager={eager}
         draggable={false}
         className="pointer-events-none absolute inset-0 h-full w-full object-cover"
         style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}

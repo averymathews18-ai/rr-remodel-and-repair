@@ -13,7 +13,7 @@ export function Showcase() {
       {/* ambient glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-[30rem] w-[46rem] -translate-x-1/2 rounded-full bg-brass/10 blur-[130px]"
+        className="glow-brass pointer-events-none absolute left-1/2 top-0 h-[30rem] w-[46rem] -translate-x-1/2 rounded-full"
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8">
@@ -32,13 +32,14 @@ export function Showcase() {
                 <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
                   {/* slider */}
                   <div className={flip ? "lg:order-2" : ""}>
-                    <div className="rounded-[1.5rem] border border-cream/10 bg-cream/[0.04] p-3 shadow-lift backdrop-blur-sm">
+                    <div className="rounded-[1.5rem] border border-cream/10 bg-cream/[0.04] p-3 shadow-lift lg:backdrop-blur-sm">
                       <BeforeAfterSlider
                         before={item.before}
                         after={item.after}
                         beforeAlt={`${item.tag} — ${item.beforeLabel ?? "before"}`}
                         afterAlt={`${item.tag} after`}
                         beforeLabel={item.beforeLabel}
+                        sizes="(min-width: 1024px) 52vw, 92vw"
                         className="aspect-[4/3] w-full"
                       />
                     </div>

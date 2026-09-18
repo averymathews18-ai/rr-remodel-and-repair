@@ -2,7 +2,7 @@ import { site } from "@/lib/site";
 import { Icon } from "./ui/Icon";
 import { SectionHeading } from "./ui/SectionHeading";
 import { Stagger, StaggerItem, Reveal } from "./ui/motion";
-import { asset } from "@/lib/asset";
+import { Img } from "./ui/Img";
 
 export function Process() {
   return (
@@ -50,10 +50,11 @@ export function Process() {
         {/* real craftsmanship — in-progress shot */}
         <Reveal className="mt-16">
           <figure className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-line shadow-soft">
-            <img
-              src={asset("/gallery/progress-1.jpg")}
+            <Img
+              base="progress-1"
+              variant="c169"
+              sizes="(min-width: 768px) 768px, 92vw"
               alt="Kitchen remodel in progress — new cabinets in, backsplash and counters to come"
-              loading="lazy"
               className="aspect-[16/9] w-full object-cover"
             />
           </figure>

@@ -2,7 +2,7 @@ import { site } from "@/lib/site";
 import { Icon } from "./ui/Icon";
 import { SectionHeading } from "./ui/SectionHeading";
 import { Reveal } from "./ui/motion";
-import { asset } from "@/lib/asset";
+import { Img, baseOf } from "./ui/Img";
 
 export function RecentWork() {
   return (
@@ -12,7 +12,7 @@ export function RecentWork() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-0 right-0 h-[26rem] w-[36rem] rounded-full bg-brass/10 blur-[130px]"
+        className="glow-brass pointer-events-none absolute bottom-0 right-0 h-[26rem] w-[36rem] rounded-full"
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8">
@@ -28,10 +28,11 @@ export function RecentWork() {
           {site.recentWork.map((w, i) => (
             <Reveal key={w.src} delay={(i % 3) * 0.08} className="break-inside-avoid">
               <figure className="group relative overflow-hidden rounded-2xl border border-cream/10">
-                <img
-                  src={asset(w.src)}
+                <Img
+                  base={baseOf(w.src)}
+                  variant="t"
+                  sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, 92vw"
                   alt={w.title}
-                  loading="lazy"
                   className="w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent" />

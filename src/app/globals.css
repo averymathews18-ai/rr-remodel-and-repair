@@ -116,7 +116,53 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ---------- Keyframe accents (motion lib handles the rest) -- */
+/* ---------- Scroll reveals (CSS only; RevealObserver flips .is-in) ----
+   Every section animation on the site runs through these rules. Only
+   opacity and transform animate, so the compositor does the work and the
+   main thread stays free — that is what a phone can actually afford. */
+[data-reveal],
+[data-stagger] > [data-stagger-item] {
+  opacity: 0;
+  transform: translateY(var(--reveal-y, 26px));
+  transition:
+    opacity 0.7s var(--ease-expo) var(--reveal-delay, 0s),
+    transform 0.7s var(--ease-expo) var(--reveal-delay, 0s);
+}
+[data-reveal].is-in,
+[data-stagger].is-in > [data-stagger-item] {
+  opacity: 1;
+  transform: none;
+}
+/* staggered children: delay by position, no JS bookkeeping */
+[data-stagger] > [data-stagger-item]:nth-child(2) { transition-delay: 0.08s; }
+[data-stagger] > [data-stagger-item]:nth-child(3) { transition-delay: 0.16s; }
+[data-stagger] > [data-stagger-item]:nth-child(4) { transition-delay: 0.24s; }
+[data-stagger] > [data-stagger-item]:nth-child(5) { transition-delay: 0.32s; }
+[data-stagger] > [data-stagger-item]:nth-child(6) { transition-delay: 0.40s; }
+[data-stagger] > [data-stagger-item]:nth-child(7) { transition-delay: 0.48s; }
+[data-stagger] > [data-stagger-item]:nth-child(n + 8) { transition-delay: 0.56s; }
+
+/* JS off: never leave content invisible */
+.no-js [data-reveal],
+.no-js [data-stagger] > [data-stagger-item] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Hero entrance (was framer-motion, now pure CSS) -- */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.88) translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-rise { animation: riseIn 0.9s var(--ease-expo) both; }
+.hero-pop  { animation: popIn 0.85s var(--ease-expo) 0.12s both; }
+.hero-late { animation-delay: 0.18s; }
+
+/* ---------- Keyframe accents ------------------------------- */
 @keyframes floatY {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -127,15 +173,65 @@
   0% { transform: scale(1.05); }
   100% { transform: scale(1.16) translate3d(-1.5%, -1.5%, 0); }
 }
-.animate-kenburns { animation: kenburns 24s ease-out infinite alternate; }
+/* Desktop only: a 24s infinite transform on a full-screen image keeps iOS
+   compositing the hero for the whole visit. Phones get a still backdrop. */
+@media (min-width: 1024px) {
+  .animate-kenburns { animation: kenburns 24s ease-out infinite alternate; }
+}
 
-/* Metallic light sweep across the logo (masked to the logo's own shape) */
+/* Metallic light sweep across the logo (masked to the logo's own shape).
+   Desktop only: an infinitely animating masked layer is one of the most
+   expensive things you can hand iOS, and it costs a second image fetch
+   for the mask. Phones keep the glow and the float instead. */
 @keyframes sheen {
   0%   { background-position: 180% 0; }
   55%  { background-position: -80% 0; }
   100% { background-position: -80% 0; }
 }
-.animate-sheen { animation: sheen 6s ease-in-out infinite; }
+.animate-sheen { display: none; }
+@media (min-width: 1024px) {
+  .animate-sheen {
+    display: block;
+    animation: sheen 6s ease-in-out infinite;
+  }
+}
+
+/* Soft brand glows. Painted as radial gradients, NOT filter:blur() —
+   a 130px blur forces iOS to allocate and re-composite a huge offscreen
+   buffer every frame; a gradient is a single cheap paint. */
+.glow-brass {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-brass) 26%, transparent),
+    transparent 100%
+  );
+}
+.glow-brass-deep {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-brass-deep) 26%, transparent),
+    transparent 100%
+  );
+}
+
+/* Mobile menu: fade the panel in, slide the links after it (was
+   AnimatePresence + staggered variants; identical feel, zero JS). */
+@keyframes menuFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes menuItemIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: none; }
+}
+.menu-fade { animation: menuFade 0.25s ease-out both; }
+[data-menu-list] > li { animation: menuItemIn 0.4s var(--ease-expo) both; }
+[data-menu-list] > li:nth-child(1) { animation-delay: 0.10s; }
+[data-menu-list] > li:nth-child(2) { animation-delay: 0.16s; }
+[data-menu-list] > li:nth-child(3) { animation-delay: 0.22s; }
+[data-menu-list] > li:nth-child(4) { animation-delay: 0.28s; }
+[data-menu-list] > li:nth-child(5) { animation-delay: 0.34s; }
+[data-menu-list] > li:nth-child(n + 6) { animation-delay: 0.40s; }
 
 @keyframes scrollDot {
   0% { transform: translateY(0); opacity: 0; }

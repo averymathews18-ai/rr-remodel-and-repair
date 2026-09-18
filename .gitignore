@@ -42,3 +42,5 @@ next-env.d.ts
 
 # local Claude Code dev config
 .claude/
+
+# generated image rungs are built from /masters by scripts/gen-responsive.js

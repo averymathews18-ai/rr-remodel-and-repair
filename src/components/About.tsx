@@ -3,7 +3,7 @@ import { Icon } from "./ui/Icon";
 import { Button } from "./ui/Button";
 import { Reveal } from "./ui/motion";
 import { accentize } from "./ui/SectionHeading";
-import { asset } from "@/lib/asset";
+import { Img } from "./ui/Img";
 
 export function About() {
   const { about } = site;
@@ -15,8 +15,10 @@ export function About() {
           {/* offset brass backdrop */}
           <div className="absolute -bottom-5 -left-5 h-full w-full rounded-[1.6rem] bg-brass/15" />
           <div className="relative overflow-hidden rounded-[1.6rem] border border-line shadow-lift">
-            <img
-              src={asset("/gallery/gray-after.jpg")}
+            <Img
+              base="gray-after"
+              variant="c43"
+              sizes="(min-width: 1024px) 46vw, 92vw"
               alt="Finished kitchen remodel by R&R Remodel and Repair"
               className="aspect-[4/3] w-full object-cover"
             />
