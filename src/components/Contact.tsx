@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { site } from "@/lib/site";
+import { asset } from "@/lib/asset";
 import { Icon } from "./ui/Icon";
 import { accentize } from "./ui/SectionHeading";
 
@@ -193,6 +194,23 @@ export function Contact() {
                   />
                 </div>
 
+                {/* TCPA: express, written, unbundled, never pre-ticked, and
+                    sitting next to the control that sends the message. */}
+                <label className="flex items-start gap-3 text-left text-xs leading-relaxed text-stone">
+                  <input
+                    type="checkbox"
+                    name="smsConsent"
+                    value="yes"
+                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-line accent-brass"
+                  />
+                  <span>
+                    Text me about my estimate. I agree that {site.legal.entity} may send
+                    me text messages about this request at the number above. Message and
+                    data rates may apply. Reply STOP to opt out. This is optional, and we
+                    will still call or email you about your project without it.
+                  </span>
+                </label>
+
                 <button
                   type="submit"
                   disabled={status === "submitting"}
@@ -213,7 +231,11 @@ export function Contact() {
                   </p>
                 )}
                 <p className="text-center text-xs text-stone">
-                  No spam, ever. Free, no-obligation estimates.
+                  No spam, ever. Free, no-obligation estimates. See our{" "}
+                  <a href={asset("/privacy/")} className="underline hover:text-brass-deep">
+                    privacy policy
+                  </a>
+                  .
                 </p>
                 {demo && (
                   <p className="flex items-center justify-center gap-1.5 rounded-lg bg-brass/10 px-3 py-2 text-center text-xs text-brass-deep">

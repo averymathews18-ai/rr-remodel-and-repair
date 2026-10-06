@@ -1,4 +1,5 @@
 import { site } from "@/lib/site";
+import { asset } from "@/lib/asset";
 import { Logo } from "./Logo";
 import { Icon } from "./ui/Icon";
 
@@ -73,8 +74,13 @@ export function Footer() {
       <div className="border-t border-ink-mute pb-24 lg:pb-0">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-6 text-sm sm:flex-row sm:px-8">
           <p>
-            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            © {new Date().getFullYear()} {site.legal.entity}. All rights reserved.
           </p>
+          <nav aria-label="Legal" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            <a href={asset("/privacy/")} className="transition-colors hover:text-brass">Privacy</a>
+            <a href={asset("/terms/")} className="transition-colors hover:text-brass">Terms</a>
+            <a href={asset("/accessibility/")} className="transition-colors hover:text-brass">Accessibility</a>
+          </nav>
           <a href="#top" className="flex items-center gap-1.5 transition-colors hover:text-brass">
             Back to top
             <Icon name="chevron" size={15} className="rotate-180" />

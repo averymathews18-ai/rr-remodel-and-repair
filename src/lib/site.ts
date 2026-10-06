@@ -61,6 +61,18 @@ export const site = {
      no tag rendered. */
   googleSiteVerification: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ?? "",
 
+  /* ---- Legal ----------------------------------------------
+     Drives the Privacy / Terms / Accessibility pages. The entity is the
+     REGISTERED company name, not the trading name, and the state is the
+     one whose law governs. Both are ⟨verify⟩ with the owner before this
+     site is handed to a client as final. Bump lastUpdated whenever the
+     text of any legal page changes. */
+  legal: {
+    entity: "R & R Remodel and Repair LLC", // ⟨verify⟩ exact registered spelling
+    state: "Florida", // ⟨verify⟩ state of formation / governing law
+    lastUpdated: "October 6, 2026",
+  },
+
   /* ---- Identity ------------------------------------------- */
   name: "R & R Remodel and Repair",
   shortName: "R & R",
