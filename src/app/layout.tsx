@@ -3,6 +3,7 @@ import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import { site } from "@/lib/site";
 import { RevealObserver } from "@/components/ui/RevealObserver";
+import { StructuredData } from "@/components/StructuredData";
 
 /* Display serif — crafted, high-end. Pinned to 600, the only weight the
    site actually uses: Fraunces' variable file carries four axes (opsz,
@@ -23,19 +24,38 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  // every relative URL below resolves against the canonical home in site.ts
+  metadataBase: new URL(site.url),
   title: {
     default: `${site.name} — ${site.tagline}`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
   keywords: [...site.keywords],
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
   openGraph: {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
+    url: "/",
+    siteName: site.name,
     type: "website",
     locale: "en_US",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: `${site.name} — finished kitchen remodel` }],
   },
-  metadataBase: new URL("https://example.com"),
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+    images: ["/og.jpg"],
+  },
+  ...(site.googleSiteVerification
+    ? { verification: { google: site.googleSiteVerification } }
+    : {}),
 };
 
 export default function RootLayout({
@@ -55,6 +75,7 @@ export default function RootLayout({
         </noscript>
         {children}
         <RevealObserver />
+        <StructuredData />
       </body>
     </html>
   );

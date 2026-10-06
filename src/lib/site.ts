@@ -43,6 +43,24 @@ export type IconKey =
   | "reveal";
 
 export const site = {
+  /* ---- Canonical home -------------------------------------
+     THE one URL search engines should treat as this site. It drives
+     metadataBase, the canonical link, the sitemap and the JSON-LD.
+     Change it here and everything follows.
+
+     ⟨verify⟩ Currently the GitHub Pages mirror, because that is the only
+     host we control that is live. Point this at the real domain the day
+     one exists (and set NEXT_PUBLIC_SITE_URL in the host's env to
+     override per-deploy without a code change). */
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    "https://averymathews18-ai.github.io/rr-remodel-and-repair",
+
+  /* Google Search Console HTML-tag verification token. Paste the value
+     from the "HTML tag" method (just the content=... string). Empty =
+     no tag rendered. */
+  googleSiteVerification: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ?? "",
+
   /* ---- Identity ------------------------------------------- */
   name: "R & R Remodel and Repair",
   shortName: "R & R",
