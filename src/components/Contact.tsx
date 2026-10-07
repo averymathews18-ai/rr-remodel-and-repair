@@ -14,23 +14,37 @@ const inputBase =
 export function Contact() {
   const { contact } = site;
   const [status, setStatus] = useState<Status>("idle");
-  const demo = !contact.formEndpoint;
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    const fd = new FormData(form);
     setStatus("submitting");
     try {
-      if (contact.formEndpoint) {
+      if (contact.formMode === "netlify") {
+        /* Netlify Forms: urlencoded POST back to the same site, with the
+           form-name field telling Netlify which form this is. Netlify only
+           accepts it if a matching form exists in the deployed HTML, which
+           is why the markup below carries data-netlify and a hidden
+           form-name even though React handles the submit. */
+        const body = new URLSearchParams();
+        fd.forEach((v, k) => body.append(k, String(v)));
+        if (!body.has("form-name")) body.append("form-name", contact.formName);
+        const res = await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: body.toString(),
+        });
+        if (!res.ok) throw new Error(`Netlify returned ${res.status}`);
+      } else if (contact.formMode === "endpoint" && contact.formEndpoint) {
         const res = await fetch(contact.formEndpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify(data),
+          body: JSON.stringify(Object.fromEntries(fd.entries())),
         });
         if (!res.ok) throw new Error("Request failed");
       } else {
-        await new Promise((r) => setTimeout(r, 800)); // demo mode
+        throw new Error("Form delivery is not configured");
       }
       setStatus("success");
       form.reset();
@@ -104,7 +118,34 @@ export function Contact() {
 
           {/* RIGHT — form */}
           <div className="min-w-0 bg-white p-8 sm:p-12">
-            {status === "success" ? (
+            {contact.formMode === "off" ? (
+              /* No host to accept a POST here (the GitHub Pages mirror).
+                 Show a real way to reach us instead of a dead form. */
+              <div className="flex h-full flex-col items-center justify-center py-8 text-center">
+                <span className="grid h-16 w-16 place-items-center rounded-full bg-brass/15 text-brass-deep">
+                  <Icon name="phone" size={30} />
+                </span>
+                <h3 className="mt-6 font-display text-2xl font-semibold text-ink">
+                  Call or email for your free estimate
+                </h3>
+                <p className="mt-3 max-w-sm text-stone">
+                  Tell us what you have in mind and we&apos;ll come take a look. Big
+                  remodel or small repair, we&apos;d love to help.
+                </p>
+                <a
+                  href={site.phoneHref}
+                  className="mt-8 inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 font-semibold text-cream transition-colors hover:bg-ink-soft"
+                >
+                  <Icon name="phone" size={18} /> {site.phoneDisplay}
+                </a>
+                <a
+                  href={`mailto:${site.email}`}
+                  className="mt-3 inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full border border-line px-6 py-4 font-semibold text-ink transition-colors hover:border-brass/60"
+                >
+                  <Icon name="mail" size={18} /> Email us
+                </a>
+              </div>
+            ) : status === "success" ? (
               <div className="flex h-full flex-col items-center justify-center py-8 text-center">
                 <span className="grid h-16 w-16 place-items-center rounded-full bg-brass/15 text-brass-deep">
                   <Icon name="check" size={34} />
@@ -129,7 +170,24 @@ export function Contact() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="space-y-4">
+              <form
+                onSubmit={onSubmit}
+                name={contact.formName}
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                className="space-y-4"
+              >
+                {/* Netlify needs these two in the deployed HTML: the form
+                    name it files submissions under, and a honeypot that a
+                    human never sees but a spam bot fills in. */}
+                <input type="hidden" name="form-name" value={contact.formName} />
+                <p className="hidden">
+                  <label>
+                    Leave this field empty
+                    <input name="bot-field" tabIndex={-1} autoComplete="off" />
+                  </label>
+                </p>
                 <div>
                   <label htmlFor="name" className="mb-1.5 block text-sm font-semibold text-slate">
                     Full name
@@ -237,13 +295,7 @@ export function Contact() {
                   </a>
                   .
                 </p>
-                {demo && (
-                  <p className="flex items-center justify-center gap-1.5 rounded-lg bg-brass/10 px-3 py-2 text-center text-xs text-brass-deep">
-                    <Icon name="reveal" size={13} /> Demo mode — add your Formspree/Netlify
-                    endpoint in <code className="font-mono">src/lib/site.ts</code> to receive
-                    submissions.
-                  </p>
-                )}
+
               </form>
             )}
           </div>

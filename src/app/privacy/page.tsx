@@ -45,12 +45,21 @@ export default function Privacy() {
           email address, project type, budget range and message you enter. We ask for
           these so we can understand the job and call or email you back about it.
         </p>
-        <p className="rounded-xl border border-line bg-bone/70 p-4 text-sm">
-          <strong className="font-semibold text-ink">Current status:</strong> the form on
-          this site is not connected to a mail service yet, so nothing typed into it is
-          transmitted or stored anywhere at this time. Please call or email us instead.
-          We will update this page on the day the form goes live.
-        </p>
+        {site.contact.formMode === "off" ? (
+          <p className="rounded-xl border border-line bg-bone/70 p-4 text-sm">
+            <strong className="font-semibold text-ink">Current status:</strong> there is no
+            working form on this copy of the site, so nothing is collected here at all.
+            Please call or email us instead.
+          </p>
+        ) : (
+          <p>
+            The form is handled by Netlify, the company that hosts this website. They
+            receive your submission, store it with our account, and pass it on to us so we
+            can reply. They process it on our behalf and do not use it for their own
+            purposes. We do not run the form through any advertising or lead-selling
+            service.
+          </p>
+        )}
       </LegalSection>
 
       <LegalSection heading="How we use it, and what we never do">

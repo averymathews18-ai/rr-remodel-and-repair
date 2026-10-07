@@ -290,8 +290,22 @@ export const site = {
       "Something else",
     ],
     budgets: ["Not sure yet", "Under $5,000", "$5,000–$25,000", "$25,000+"],
-    // Paste a Formspree/Netlify endpoint here to receive submissions.
-    // Until then the form runs in friendly demo mode.
+    /* How the estimate form delivers.
+         "netlify"  — Netlify Forms captures the POST. Netlify then notifies
+                      us however we configure it in the dashboard (email, an
+                      email-to-SMS gateway, or a webhook). No API keys here.
+         "endpoint" — POST JSON to formEndpoint instead (Formspree etc).
+         "off"      — no form is shown; the panel asks people to call or
+                      email. Used on hosts that cannot accept a POST, like
+                      the GitHub Pages mirror, so we never show a dead form.
+       Set with NEXT_PUBLIC_FORM_MODE at build time. */
+    formMode: (process.env.NEXT_PUBLIC_FORM_MODE ?? "netlify") as
+      | "netlify"
+      | "endpoint"
+      | "off",
+    /* The Netlify form name. Netlify groups submissions under this. */
+    formName: "estimate",
+    // Only used when formMode is "endpoint".
     formEndpoint: "" as string,
   },
 } as const;
