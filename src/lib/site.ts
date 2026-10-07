@@ -48,13 +48,11 @@ export const site = {
      metadataBase, the canonical link, the sitemap and the JSON-LD.
      Change it here and everything follows.
 
-     ⟨verify⟩ Currently the GitHub Pages mirror, because that is the only
-     host we control that is live. Point this at the real domain the day
-     one exists (and set NEXT_PUBLIC_SITE_URL in the host's env to
-     override per-deploy without a code change). */
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    "https://averymathews18-ai.github.io/rr-remodel-and-repair",
+     This is the client's real domain, served from Netlify. Every other
+     copy (the GitHub Pages mirror, any preview) canonicals BACK to it, so
+     search engines credit the real site and treat mirrors as duplicates.
+     Override per-deploy with NEXT_PUBLIC_SITE_URL. */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://rrremodelandrepair.com",
 
   /* Google Search Console HTML-tag verification token. Paste the value
      from the "HTML tag" method (just the content=... string). Empty =
