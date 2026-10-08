@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://rrremodelandrepair.com
+Sitemap: https://rrremodelandrepair.com/sitemap.xml

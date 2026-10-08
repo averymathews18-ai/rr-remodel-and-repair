@@ -1,0 +1,5 @@
+:HL["/rr-remodel-and-repair/_next/static/chunks/0o2qvepzppvjb.css","style"]
+:HL["/rr-remodel-and-repair/_next/static/media/5a54cb9402415d65-s.p.1pclt2l60k1wo.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/rr-remodel-and-repair/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/rr-remodel-and-repair/img/logo-mark--l-220.webp","image",{"imageSrcSet":"/rr-remodel-and-repair/img/logo-mark--l-140.webp 140w, /rr-remodel-and-repair/img/logo-mark--l-220.webp 220w, /rr-remodel-and-repair/img/logo-mark--l-340.webp 340w","imageSizes":"44px","fetchPriority":"auto"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"terms","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"kxwbptYnsEThXNc1RaQGa"}

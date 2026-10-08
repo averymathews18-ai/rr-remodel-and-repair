@@ -1,0 +1,16 @@
+# Netlify cache headers (other hosts ignore this file).
+# Hashed build assets: safe to cache forever.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Generated image rungs. Their names encode base+variant+width, so a new
+# image is a NEW filename — nothing here is ever mutated in place, which
+# makes a long cache safe. (CDNs cache by path: never overwrite a rung.)
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML: always revalidate so a deploy shows up immediately.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+/
+  Cache-Control: public, max-age=0, must-revalidate
