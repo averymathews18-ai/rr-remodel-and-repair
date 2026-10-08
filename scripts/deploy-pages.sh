@@ -11,7 +11,10 @@ REPO_URL="$(git config --get remote.origin.url)"
 REPO_URL="${REPO_URL#https://}"          # strip protocol for token auth
 
 echo "▸ Building static export…"
-GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/rr-remodel-and-repair npm run build
+# The mirror is a preview only: no form (a static host cannot take the
+# POST) and noindex, so it never competes with rrremodelandrepair.com.
+GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/rr-remodel-and-repair \
+  NEXT_PUBLIC_FORM_MODE=off NEXT_PUBLIC_NOINDEX=true npm run build
 touch out/.nojekyll                       # let GitHub serve the _next/ folder
 
 echo "▸ Publishing to gh-pages…"

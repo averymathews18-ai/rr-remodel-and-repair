@@ -33,11 +33,18 @@ export const metadata: Metadata = {
   description: site.description,
   keywords: [...site.keywords],
   alternates: { canonical: "/" },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
-  },
+  /* Mirrors (the GitHub Pages copy, any preview host) must never compete
+     with the client's own domain in search. They build with
+     NEXT_PUBLIC_NOINDEX=true, which keeps the canonical pointing at the
+     real site but tells crawlers not to index the copy. */
+  robots:
+    process.env.NEXT_PUBLIC_NOINDEX === "true"
+      ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+      : {
+          index: true,
+          follow: true,
+          googleBot: { index: true, follow: true, "max-image-preview": "large" },
+        },
   openGraph: {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
